@@ -16,5 +16,5 @@ runs:
       shell: bash
 
     - name: Dummy Step
-      run: echo "RepoC: Dummy steps completed!"
+      run: echo "Dummy steps completed!"
       shell: bash
