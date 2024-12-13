@@ -1,11 +1,14 @@
 name: "RepoC Action"
-description: "Initial entry point for the chain of actions"
+description: "Final action interacting with RepoB"
+
 inputs:
   token:
-    description: "GitHub Token (not used here)"
-    required: false
+    description: "GitHub Token for accessing RepoB"
+    required: true
+
 runs:
   using: "composite"
   steps:
     - name: Dummy Step
-      run: echo "Is this the real life?"
+      run: echo "You've been pwned!"
+      shell: bash
