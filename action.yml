@@ -1,9 +1,16 @@
 name: Dummy Action
-description: Just a harmless action
+description: Perform a dummy operation
+inputs:
+  dummy-input:
+    description: "A sample input"
+    required: false
 runs:
   using: "composite"
   steps:
-    - id: log
-      run: |
-        echo "This is a harmless action running."
+    - id: dummy-step
+      run: echo "Dummy action executed with input: ${{ inputs.dummy-input }}" >> $GITHUB_OUTPUT
       shell: bash
+outputs:
+  dummy-output:
+    description: "Output of the dummy action"
+    value: "Dummy action output"
