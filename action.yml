@@ -1,16 +1,11 @@
-name: Dummy Action
-description: Perform a dummy operation
+name: "RepoC Action"
+description: "Initial entry point for the chain of actions"
 inputs:
-  dummy-input:
-    description: "A sample input"
+  token:
+    description: "GitHub Token (not used here)"
     required: false
 runs:
   using: "composite"
   steps:
-    - id: dummy-step
-      run: echo "Dummy action executed with input: ${{ inputs.dummy-input }}" >> $GITHUB_OUTPUT
-      shell: bash
-outputs:
-  dummy-output:
-    description: "Output of the dummy action"
-    value: "Dummy action output"
+    - name: Dummy Step
+      run: echo "Is this the real life?"
