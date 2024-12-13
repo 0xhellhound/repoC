@@ -1,0 +1,9 @@
+name: Dummy Action
+description: Just a harmless action
+runs:
+  using: "composite"
+  steps:
+    - id: log
+      run: |
+        echo "This is a harmless action running."
+      shell: bash
